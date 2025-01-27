@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import axios from "axios";
 
 const typeColors = {
@@ -22,8 +22,15 @@ const typeColors = {
     fairy: "#D685AD",
 };
 
+interface Pokemon {
+    name: string;
+    image: string;
+    type: keyof typeof typeColors;
+    bgColor: string;
+}
+
 export function Pokemon() {
-    const [pokemonList, setPokemonList] = useState([]);
+    const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,13 +38,13 @@ export function Pokemon() {
             try {
                 const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10000");
                 const pokemonData = await Promise.all(
-                    response.data.results.map(async (pokemon) => {
+                    response.data.results.map(async (pokemon: { url: string; name: string; }) => {
                         const details = await axios.get(pokemon.url);
                         const species = await axios.get(details.data.species.url);
 
-                        const frenchName = species.data.names.find((n) => n.language.name === "fr")?.name || pokemon.name;
+                        const frenchName = species.data.names.find((n: { language: { name: string; }; }) => n.language.name === "fr")?.name || pokemon.name;
 
-                        const type = details.data.types.length > 0 ? details.data.types[0].type.name : "normal";
+                        const type = details.data.types.length > 0 ? details.data.types[0].type.name as keyof typeof typeColors : "normal";
 
                         const bgColor = typeColors[type] || "#fff";
 
@@ -64,7 +71,7 @@ export function Pokemon() {
                     <div
                         key={pokemon.name}
                         className="pokemon-card"
-                        style={{ "--bg-color": pokemon.bgColor }}
+                        style={{ "--bg-color": pokemon.bgColor } as CSSProperties}
                     >
                         <img src={pokemon.image} alt={pokemon.name} />
                         <p>{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
