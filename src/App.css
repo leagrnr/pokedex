@@ -2,7 +2,8 @@
 
 .container {
   width: 100vw;
-    height: 90vh;
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .title {
@@ -17,22 +18,27 @@
   gap: 20px;
   justify-items: center;
   padding: 20px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
 }
 
 .pokemon-card {
-  background: #545454;
   border-radius: 10px;
   padding: 10px;
   text-align: center;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  background-color: #3d3d3d;
 }
 
 .pokemon-card:hover {
+  background-color: var(--bg-color);
   transform: scale(1.1);
+  color: white;
 }
 
 .pokemon-card img {
   width: 100px;
   height: 100px;
 }
+
