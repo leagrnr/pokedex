@@ -1,8 +1,51 @@
+/*Navbar*/
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  height: 10vh;
+  width: 100vw;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  position: relative;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 5px;
+  right: 0;
+  background: white;
+  transition: width 0.4s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+  left: 0;
+  background: white;
+}
+
 /*Pokemon*/
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   overflow-y: hidden;
 }
 
